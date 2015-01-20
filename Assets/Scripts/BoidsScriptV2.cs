@@ -4,6 +4,15 @@ using System.Collections;
 public class BoidsScriptV2 : MonoBehaviour {
 
     [SerializeField]
+    int _boidsCount;
+
+    [SerializeField]
+    GameObject _boidPrefab;
+
+    [SerializeField]
+    GameObject _newBoidPrefab;
+
+    [SerializeField]
     GameObject[] _boids;
 
     [SerializeField]
@@ -23,6 +32,7 @@ public class BoidsScriptV2 : MonoBehaviour {
     }
 
     void InitializePositions() {
+        /*
         boids = new Boid[_boids.Length];
         newBoids = new Boid[_newBoids.Length];
 
@@ -37,6 +47,25 @@ public class BoidsScriptV2 : MonoBehaviour {
             _newBoids[i].transform.position = new Vector3((Random.value - 0.5f) * 10, Random.value * 5, 5 + ((Random.value - 0.5f) * 10));
 
             Boid b = new Boid(_newBoids[i]);
+            newBoids[i] = b;
+        }*/
+
+        boids = new Boid[_boidsCount];
+        newBoids = new Boid[_boidsCount];
+
+        for(var i = 0; i < _boidsCount; ++i) {
+            GameObject go = (GameObject)GameObject.Instantiate(_boidPrefab);
+            go.transform.position = new Vector3((Random.value - 0.5f) * 10, Random.value * 5, 5 + ((Random.value - 0.5f) * 10));
+
+            Boid b = new Boid(go);
+            boids[i] = b;
+        }
+
+        for(var i = 0; i < _boidsCount; ++i) {
+            GameObject go = (GameObject)GameObject.Instantiate(_newBoidPrefab);
+            go.transform.position = new Vector3((Random.value - 0.5f) * 10, Random.value * 5, 5 + ((Random.value - 0.5f) * 10));
+
+            Boid b = new Boid(go);
             newBoids[i] = b;
         }
     }
@@ -166,7 +195,7 @@ public class BoidsScriptV2 : MonoBehaviour {
         var zMin = -50;
         var zMax = 50;
 
-        Vector3 v = new Vector3(0, 0, 0);
+        Vector3 v = Vector3.zero;
 
         if(b.go.transform.position.x < xMin)
             v.x = 10;

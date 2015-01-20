@@ -103,7 +103,7 @@ public class BoidsScriptV2 : MonoBehaviour {
             }
         }
         pcj /= (_boidsCount - 1);
-        return (pcj - bj.go.transform.position) / 1000;
+        return (pcj - bj.go.transform.position) / 2000;
     }
 
     Vector3 MinimumVitalSpaceRule(Boid bj) {

@@ -15,12 +15,12 @@ public class BoidsScriptV2 : MonoBehaviour {
     [SerializeField]
     GameObject[] _boids;
 
-    [SerializeField]
-    GameObject[] _newBoids;
+    //[SerializeField]
+    //GameObject[] _newBoids;
 
     private Boid[] boids;
 
-    private Boid[] newBoids;
+    //private Boid[] newBoids;
 
     void Start() {
         InitializePositions();
@@ -32,26 +32,8 @@ public class BoidsScriptV2 : MonoBehaviour {
     }
 
     void InitializePositions() {
-        /*
-        boids = new Boid[_boids.Length];
-        newBoids = new Boid[_newBoids.Length];
-
-        for(var i = 0; i < _boids.Length; ++i) {
-            _boids[i].transform.position = new Vector3((Random.value - 0.5f) * 10, Random.value * 5, 5 + ((Random.value - 0.5f) * 10));
-
-            Boid b = new Boid(_boids[i]);
-            boids[i] = b;
-        }
-
-        for(var i = 0; i < _newBoids.Length; ++i) {
-            _newBoids[i].transform.position = new Vector3((Random.value - 0.5f) * 10, Random.value * 5, 5 + ((Random.value - 0.5f) * 10));
-
-            Boid b = new Boid(_newBoids[i]);
-            newBoids[i] = b;
-        }*/
-
         boids = new Boid[_boidsCount];
-        newBoids = new Boid[_boidsCount];
+        //newBoids = new Boid[_boidsCount];
 
         for(var i = 0; i < _boidsCount; ++i) {
             GameObject go = (GameObject)GameObject.Instantiate(_boidPrefab);
@@ -60,14 +42,15 @@ public class BoidsScriptV2 : MonoBehaviour {
             Boid b = new Boid(go);
             boids[i] = b;
         }
+        /*
+                for(var i = 0; i < _boidsCount; ++i) {
+                    GameObject go = (GameObject)GameObject.Instantiate(_newBoidPrefab);
+                    go.transform.position = new Vector3((Random.value - 0.5f) * 10, Random.value * 5, 5 + ((Random.value - 0.5f) * 10));
 
-        for(var i = 0; i < _boidsCount; ++i) {
-            GameObject go = (GameObject)GameObject.Instantiate(_newBoidPrefab);
-            go.transform.position = new Vector3((Random.value - 0.5f) * 10, Random.value * 5, 5 + ((Random.value - 0.5f) * 10));
-
-            Boid b = new Boid(go);
-            newBoids[i] = b;
-        }
+                    Boid b = new Boid(go);
+                    newBoids[i] = b;
+                }
+         */
     }
 
     void MoveAllBoidsToNewPositions() {
@@ -78,8 +61,6 @@ public class BoidsScriptV2 : MonoBehaviour {
         Vector3 v5 = Vector3.zero;
 
         foreach(Boid b in boids) {
-            Vector3 initPos = b.go.transform.position;
-
             v1 = GatheringRule(b);
             v2 = MinimumVitalSpaceRule(b);
             v3 = BoidsTryToKeepUpRule(b);
@@ -90,23 +71,13 @@ public class BoidsScriptV2 : MonoBehaviour {
 
             b.velocity = b.velocity + v1 + v2 + v3 + v4 + v5;
 
-            Vector3 lol = b.go.transform.position + b.velocity;
-            b.go.transform.LookAt(lol);
-
-            b.go.transform.position = b.go.transform.position + b.velocity;
-
-            Vector3 endPos = b.go.transform.position;
-            Vector3 temp = endPos - initPos;
-            Vector3 direction = endPos.normalized;
-            //Debug.Log(direction);
-
-            // b.go.rigidbody.MoveRotation(Quaternion.LookRotation(direction));
-            // b.go.transform.LookAt(endPos);
+            Vector3 endPos = b.go.transform.position + b.velocity;
+            b.go.transform.LookAt(endPos);
+            b.go.transform.position = endPos;
         }
 
+        /*
         foreach(Boid b in newBoids) {
-            Vector3 initPos = b.go.transform.position;
-
             v1 = GatheringRule(b);
             v2 = MinimumVitalSpaceRule(b);
             v3 = BoidsTryToKeepUpRule(b);
@@ -117,19 +88,10 @@ public class BoidsScriptV2 : MonoBehaviour {
 
             b.velocity = b.velocity + v1 + v2 + v3 + v4 + v5;
 
-            Vector3 lol = b.go.transform.position + b.velocity;
-            b.go.transform.LookAt(lol);
-
-            b.go.transform.position = b.go.transform.position + b.velocity;
-
-            Vector3 endPos = b.go.transform.position;
-            Vector3 temp = endPos - initPos;
-            Vector3 direction = endPos.normalized;
-            //Debug.Log(direction);
-
-            // b.go.rigidbody.MoveRotation(Quaternion.LookRotation(direction));
-            // b.go.transform.LookAt(endPos);
-        }
+            Vector3 endPos = b.go.transform.position + b.velocity;
+            b.go.transform.LookAt(endPos);
+            b.go.transform.position = endPos;
+        }*/
     }
 
     Vector3 GatheringRule(Boid bj) {
@@ -140,47 +102,42 @@ public class BoidsScriptV2 : MonoBehaviour {
                 pcj += b.go.transform.position;
             }
         }
-
-        pcj /= (_boids.Length - 1);
-
-        return (pcj - bj.go.transform.position) / 400;
+        pcj /= (_boidsCount - 1);
+        return (pcj - bj.go.transform.position) / 1000;
     }
 
     Vector3 MinimumVitalSpaceRule(Boid bj) {
-        Vector3 c = new Vector3(0, 0, 0);
+        Vector3 c = Vector3.zero;
 
         foreach(Boid b in boids) {
             if(bj != b) {
-                if(Vector3.Distance(b.go.transform.position, bj.go.transform.position) < 3) {
+                if(Vector3.Distance(b.go.transform.position, bj.go.transform.position) < 1) {
                     c = c - (b.go.transform.position - bj.go.transform.position);
                 }
             }
         }
-
         return c;
     }
 
     Vector3 BoidsTryToKeepUpRule(Boid bj) {
-        Vector3 pvj = new Vector3(0, 0, 0);
+        Vector3 pvj = Vector3.zero;
 
         foreach(Boid b in boids) {
             if(bj != b) {
                 pvj += b.velocity;
             }
         }
-
-        pvj /= (_boids.Length - 1);
-
-        return (pvj - bj.velocity) / 100;
+        pvj = pvj / (_boidsCount - 1);
+        return (pvj - bj.velocity) / 1000;
     }
 
     Vector3 GoThereRule(Boid bj) {
-        Vector3 place = new Vector3(0, 0, 0);
+        Vector3 place = Vector3.zero;
         return (place - bj.go.transform.position) / 100;
     }
 
     void LimitVelocity(Boid b) {
-        float vlim = 1f;
+        float vlim = 0.5f;
 
         if(Mathf.Abs(b.velocity.magnitude) > vlim) {
             b.velocity = (b.velocity / Mathf.Abs(b.velocity.magnitude)) * vlim;
@@ -188,29 +145,30 @@ public class BoidsScriptV2 : MonoBehaviour {
     }
 
     Vector3 StayHereRule(Boid b) {
-        var xMin = -50;
-        var xMax = 50;
-        var yMin = 0;
-        var yMax = 50;
-        var zMin = -50;
-        var zMax = 50;
+        int xMin = -50;
+        int xMax = 50;
+        int yMin = 0;
+        int yMax = 50;
+        int zMin = -50;
+        int zMax = 50;
+        int getOutOrHere  = 10;
 
         Vector3 v = Vector3.zero;
 
         if(b.go.transform.position.x < xMin)
-            v.x = 10;
+            v.x = getOutOrHere;
         else if(b.go.transform.position.x > xMax)
-            v.x = -10;
+            v.x = -getOutOrHere;
 
         if(b.go.transform.position.y < yMin)
-            v.y = 10;
+            v.y = getOutOrHere;
         else if(b.go.transform.position.y > yMax)
-            v.y = -10;
+            v.y = -getOutOrHere;
 
         if(b.go.transform.position.z < zMin)
-            v.z = 10;
+            v.z = getOutOrHere;
         else if(b.go.transform.position.z > zMax)
-            v.z = -10;
+            v.z = -getOutOrHere;
 
         return v;
     }

@@ -19,7 +19,7 @@ RenderSettings:
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientLight: {r: .200000003, g: .200000003, b: .200000003, a: 1}
-  m_SkyboxMaterial: {fileID: 0}
+  m_SkyboxMaterial: {fileID: 2100000, guid: eca3c00ef1cc6ce45bfade23ebc4ab1e, type: 2}
   m_HaloStrength: .5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -1224,9 +1224,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 297236731}
   - 33: {fileID: 297236730}
-  - 64: {fileID: 297236729}
   - 23: {fileID: 297236728}
-  - 54: {fileID: 297236732}
   m_Layer: 0
   m_Name: Plane
   m_TagString: Untagged
@@ -1254,19 +1252,6 @@ Renderer:
   m_ScaleInLightmap: 1
   m_SortingLayerID: 0
   m_SortingOrder: 0
---- !u!64 &297236729
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 297236727}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_SmoothSphereCollisions: 0
-  m_Convex: 0
-  m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!33 &297236730
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1282,25 +1267,10 @@ Transform:
   m_GameObject: {fileID: 297236727}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.66492462, y: 4.66492558, z: 4.66492558}
+  m_LocalScale: {x: 1000, y: 1000, z: 1000}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 2
---- !u!54 &297236732
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 297236727}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: .0500000007
-  m_UseGravity: 1
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1001 &307900596
 Prefab:
   m_ObjectHideFlags: 0
@@ -2225,7 +2195,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &689045964
 Transform:
   m_ObjectHideFlags: 0
@@ -2449,6 +2419,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e80b94a585236f34195f09dacdea3d06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _boidsCount: 50
+  _boidPrefab: {fileID: 100000, guid: 21fe6b43c18385946ac98683d998654f, type: 2}
+  _newBoidPrefab: {fileID: 100000, guid: 5f530065fb1e0b44fb3db749cc4a0da6, type: 2}
   _boids:
   - {fileID: 200362972}
   - {fileID: 290952730}
@@ -3092,7 +3065,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &986188618
 Transform:
   m_ObjectHideFlags: 0

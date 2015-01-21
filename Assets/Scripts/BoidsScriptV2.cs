@@ -108,11 +108,12 @@ public class BoidsScriptV2 : MonoBehaviour {
 
     Vector3 MinimumVitalSpaceRule(Boid bj) {
         Vector3 c = Vector3.zero;
+        float distance = 3;
 
         foreach(Boid b in boids) {
             if(bj != b) {
-                if(Vector3.Distance(b.go.transform.position, bj.go.transform.position) < 1) {
-                    c = c - (b.go.transform.position - bj.go.transform.position);
+                if(Vector3.Distance(b.go.transform.position, bj.go.transform.position) < distance) {
+                    c = c - ((b.go.transform.position - bj.go.transform.position) / distance);
                 }
             }
         }

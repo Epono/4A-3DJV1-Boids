@@ -325,7 +325,7 @@ AudioListener:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 708677414}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!124 &708677417
 Behaviour:
   m_ObjectHideFlags: 0
@@ -397,8 +397,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _boidsCount: 200
   _boidPrefab: {fileID: 100000, guid: 21fe6b43c18385946ac98683d998654f, type: 2}
-  _rule1Value: 2
-  _minimalDistane: 10
+  _rule1Value: 50
+  _minimalDistane: 3
   _rule3Value: 1000
 --- !u!1 &875215109
 GameObject:

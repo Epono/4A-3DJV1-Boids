@@ -118,11 +118,11 @@ public class BoidsScriptV2 : MonoBehaviour {
     Vector3 StayHereRule(Boid b) {
         int xMin = -50;
         int xMax = 50;
-        int yMin = 0;
+        int yMin = 10;
         int yMax = 50;
         int zMin = -50;
         int zMax = 50;
-        int getOutOrHere  = 10;
+        int getOutOrHere  = 1;
 
         Vector3 v = Vector3.zero;
 
